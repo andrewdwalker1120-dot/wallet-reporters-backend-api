@@ -16,6 +16,10 @@ export default {
     if (request.method === "GET" && url.pathname === "/") {
       return json({ ok: true, service: "wallet-reporters-backend" }, cors);
     }
+  const adminKey = request.headers.get("x-admin-key");
+  if (!adminKey || adminKey !== env.ADMIN_KEY) {
+    return json({ ok: false, error: "Unauthorized" }, cors, 401);
+  }
 
     if (request.method === "POST" && url.pathname === "/api/reports") {
       let body;
