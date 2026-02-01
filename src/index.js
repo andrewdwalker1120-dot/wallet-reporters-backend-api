@@ -4,12 +4,10 @@ export default {
     const origin = request.headers.get("Origin") || "*";
 
     const cors = {
-  "Access-Control-Allow-Origin": origin,
-  "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-  "Access-Control-Allow-Credentials": "true",
-};
-
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Credentials": "true",
     };
 
     if (request.method === "OPTIONS") {
@@ -20,6 +18,7 @@ export default {
       return json({ ok: true, service: "wallet-reporters-backend" }, cors);
     }
 
+    // POST /api/reports (public)
     if (request.method === "POST" && url.pathname === "/api/reports") {
       let body;
       try {
@@ -55,6 +54,7 @@ export default {
       return json({ ok: true, id, created_at }, cors);
     }
 
+    // GET /api/reports?wallet=0x... (public)
     if (request.method === "GET" && url.pathname === "/api/reports") {
       const wallet = (url.searchParams.get("wallet") || "").trim();
       if (!wallet) {
@@ -73,8 +73,14 @@ export default {
         .all();
 
       return json({ ok: true, results }, cors);
-      // GET /api/admin/reports?q=...&limit=50
-    if (request.method === "GET" && url.pathname === "/api/admin/reports") {
+    }
+
+    // GET /api/admin/reports?q=...&limit=50 (admin)
+    if (
+      request.method === "GET" &&
+      (url.pathname === "/api/admin/reports" ||
+        url.pathname === "/api/admin/reports/")
+    ) {
       const q = (url.searchParams.get("q") || "").trim();
       const limitRaw = parseInt(url.searchParams.get("limit") || "50", 10);
       const limit = Number.isFinite(limitRaw)
