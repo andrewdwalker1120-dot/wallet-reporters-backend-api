@@ -1,5 +1,5 @@
 {
-  "name": "wallet-reporters-backend",
+  "name": "wallet-reporters-backend-api",
   "main": "src/index.js",
   "compatibility_date": "2025-01-01",
   "d1_databases": [
