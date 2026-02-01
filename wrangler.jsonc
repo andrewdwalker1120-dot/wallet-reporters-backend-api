@@ -1,0 +1,12 @@
+{
+  "name": "wallet-reporters-backend",
+  "main": "src/index.js",
+  "compatibility_date": "2025-01-01",
+  "d1_databases": [
+    {
+      "binding": "wallet_reporters",
+      "database_name": "wallet-reporters",
+      "database_id": "80c8534c-ab3b-4836-8266-cb0f7c34b340"
+    }
+  ]
+}
